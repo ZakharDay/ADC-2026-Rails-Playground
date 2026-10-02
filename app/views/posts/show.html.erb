@@ -3,9 +3,12 @@
 <%= render @post %>
 
 <div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
   <%= link_to "Back to posts", posts_path %>
-  <%= link_to "Destroy this post", @post, data: { turbo_stream: false, turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+
+  <% if can? :manage, @post %>
+    <%= link_to "Edit this post", edit_post_path(@post) %>
+    <%= link_to "Destroy this post", @post, data: { turbo_stream: false, turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+  <% end %>
 </div>
 
 <h2>Comments</h2>
@@ -14,9 +17,11 @@
   <% @post.comments.each do |comment| %>
     <%= render comment %>
 
-    <p>
-      <%= link_to "Destroy Comment", [@post, comment], data: { turbo_stream: false, turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-    </p>
+    <% if can? :manage, comment %>
+      <p>
+        <%= link_to "Destroy Comment", [@post, comment], data: { turbo_stream: false, turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      </p>
+    <% end %>
   <% end %>
 </div>
 

@@ -4,6 +4,13 @@
 
 <h1>Posts</h1>
 
+<% if can? :manage, Post %>
+  <%= link_to "New post", new_post_path %>
+  <br><br>
+<% end %>
+
+<hr><br>
+
 <div id="posts">
   <% @posts.each do |post| %>
     <%= render post %>
@@ -12,5 +19,3 @@
     </p>
   <% end %>
 </div>
-
-<%= link_to "New post", new_post_path %>

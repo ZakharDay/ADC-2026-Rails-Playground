@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
+  before_action :set_comment, only: %i[ show edit destroy ]
 
   # GET /comments or /comments.json
   # def index
@@ -22,7 +23,12 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.create(params[:comment].permit(:body))
+
+    @comment = @post.comments.create!(
+      user_id: current_user.id,
+      body: params[:comment][:body]
+    )
+
     redirect_to post_path(@post)
   end
 

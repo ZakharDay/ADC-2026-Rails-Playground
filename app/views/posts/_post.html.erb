@@ -1,4 +1,6 @@
 <div id="<%= dom_id post %>">
+  <%= image_tag post.cover.url, width: 600 if post.cover.present? %>
+
   <div>
     <strong>Title:</strong>
     <%= post.title %>
@@ -11,7 +13,7 @@
 
   <div>
     <strong>Author:</strong>
-    <%= post.author %>
+    <%= post.user.email %>
   </div>
 
 </div>
